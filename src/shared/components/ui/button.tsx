@@ -4,6 +4,7 @@ import * as React from "react"
 import { Slot } from "@radix-ui/react-slot"
 import { cva, type VariantProps } from "class-variance-authority"
 import { cn } from "@shared/lib/utils"
+import { FaSpinner } from "react-icons/fa"
 
 const buttonVariants = cva(
   "inline-flex cursor-pointer items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-bold transition-all duration-200 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:size-4 [&_svg]:shrink-0",
@@ -39,10 +40,11 @@ export interface ButtonProps
   link?: string
   startIcon?: React.ReactNode
   endIcon?: React.ReactNode
+  isLoading?: boolean
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-  ({ className, variant, size, link, startIcon, endIcon, asChild = false, ...props }, ref) => {
+  ({ className, variant, size, link, startIcon, endIcon, asChild = false, isLoading, ...props }, ref) => {
     const buttonRef = React.useRef<HTMLButtonElement>(null)
     const finalRef = ref || buttonRef
 
@@ -86,10 +88,11 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
         className={cn(buttonVariants({ variant, size, className }), "relative overflow-hidden")}
         ref={finalRef}
         {...props}
+        disabled={props.disabled || isLoading}
         onClick={handleClick}
         children={
           <div className="flex items-center justify-center gap-4">
-            {startIcon && startIcon}
+            {isLoading ? <FaSpinner className="animate-spin" /> : startIcon}
             {props.children}
             {endIcon && endIcon}
           </div>

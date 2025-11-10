@@ -1,9 +1,19 @@
-import { AuthorizationSelector } from "@modules/authorization";
+"use client";
+
+import { useAuth } from "@/src/core/context/AuthContext";
+import { AuthSelector } from "@/src/modules/auth";
+import { useRouter } from "next/navigation";
 
 export default function AuthPage() {
+  const { user } = useAuth();
+  const router = useRouter();
+
+  if (user) {
+    router.push("/");
+    return null;
+  }
+  
   return (
-    <div className="flex w-screen h-screen min-h-screen items-center justify-center bg-linear-to-l from-[#054c76] via-[#0c192a] to-[#471c3a]">
-      <AuthorizationSelector />
-    </div>
+    <AuthSelector />
   );
 }

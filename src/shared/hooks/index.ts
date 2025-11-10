@@ -1,2 +1,1 @@
-export { useBreakpoint } from './useBreakpoint'
-export type { UseBreakpointReturn } from './useBreakpoint'
+export { default as useToast } from './useToast'
