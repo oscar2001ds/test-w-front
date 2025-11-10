@@ -50,9 +50,7 @@ export default function RootLayout({
           <AuthProvider>
             <BreakpointsProvider>
               <AOSProvider>
-                <div className="flex w-screen h-screen min-h-screen items-center justify-center bg-linear-to-l from-[#054c76] via-[#0c192a] to-[#471c3a]">
-                  {children}
-                </div>
+                {children}
               </AOSProvider>
             </BreakpointsProvider>
           </AuthProvider>
