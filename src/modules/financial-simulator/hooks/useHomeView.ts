@@ -64,7 +64,7 @@ export const useHomeView = (): HomeViewHookReturn => {
   }, [fetchAllData])
 
   const createNewSimulation = useCallback(() => {
-    router.push('/financial-simulator/my-simulations#create')
+    router.push('/financial-simulator/my-simulations?create=true')
   }, [router])
 
   const viewAllSimulations = useCallback(() => {
