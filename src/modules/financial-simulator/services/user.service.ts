@@ -29,23 +29,6 @@ class UserService {
       throw new Error('Failed to update user')
     }
   }
-
-  async getUserProfile(userId: string): Promise<User> {
-    try {
-      const url = `${this.baseUrl}/${userId}/profile`
-      
-      const response = await httpClient.get<User>(url)
-
-      if (!response) {
-        throw new Error("Error inesperado al obtener el perfil del usuario")
-      }
-
-      return response
-    } catch (error) {
-      console.error('Error fetching user profile:', error)
-      throw new Error('Failed to fetch user profile')
-    }
-  }
 }
 
 export const userService = new UserService()

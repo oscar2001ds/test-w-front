@@ -35,11 +35,6 @@ export async function registerService(input: RegisterInput): Promise<RegisterRes
       throw new Error("Error en el registro")
     }
 
-    // Si el registro incluye login automático, configurar el token
-    if (response.access_token) {
-      httpClient.setAuthToken(response.access_token)
-    }
-
     return response
   } catch (error) {
     if (error instanceof Error) {

@@ -14,28 +14,10 @@ import {
 } from "@shared/components/ui/sidebar"
 import { useSidebar } from "../../hooks/useSideBar";
 import { Button, buttonVariants } from "@/src/shared/components/ui/button";
-import { useAuth } from "@/src/core/context/AuthContext";
 import { Dialog, DialogHeader, DialogContent, DialogDescription, DialogTitle, DialogTrigger, DialogClose } from "@/src/shared/components/ui/dialog";
-import { useRouter } from "next/navigation";
-import { useToast } from "@/src/shared";
 
 export default function AppSidebar({ sideBarWidth = "300px" }: { sideBarWidth?: string }) {
-  const router = useRouter();
-  const { selectedItem, handleOptionClick, authSideBarItems } = useSidebar();
-  const { logout } = useAuth();
-  const { showSuccess, showError } = useToast();
-
-
-  const handleLogout = async () => {
-    try {
-      await logout();
-      showSuccess("Sesión cerrada exitosamente.");
-      router.push("/auth");
-    } catch (error) {
-      showError("Error al cerrar sesión.");
-      console.error(error);
-    }
-  }
+  const { selectedItem, authSideBarItems, handleOptionClick, handleLogout } = useSidebar();
 
   return (
     <Sidebar variant="sidebar" collapsible="icon" style={{ width: sideBarWidth }}>

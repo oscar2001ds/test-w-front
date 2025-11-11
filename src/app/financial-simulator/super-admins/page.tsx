@@ -1,3 +1,6 @@
+import { SuperAdminsView } from "@modules/financial-simulator";
+
 export default function FinancialSimulatorSuperAdminsPage() {
-  return <div>Financial Simulator Super Admins Page</div>;
+  return (
+    <SuperAdminsView />);
 }

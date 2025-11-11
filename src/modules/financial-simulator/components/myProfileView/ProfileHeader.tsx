@@ -69,7 +69,7 @@ export function ProfileHeader({
           <div className="flex justify-center lg:justify-start">
             <div className="relative h-24 w-24 sm:h-28 sm:w-28 lg:h-32 lg:w-32">
               <img
-                src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user.email}`}
+                src={`https://api.dicebear.com/7.x/avataaars/svg?seed=${user.email}&backgroundColor=b6e3f4,c0aede,d1d4f9&accessories=eyepatch,kurt,prescription01&accessoriesProbability=100`}
                 alt={user.fullName}
                 className="w-full h-full object-cover border-4 border-white shadow-lg rounded-full bg-white lg:absolute lg:z-10 lg:ml-2 lg:mt-12"
               />

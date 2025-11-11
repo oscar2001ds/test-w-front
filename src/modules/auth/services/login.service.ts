@@ -12,12 +12,9 @@ export async function loginService(input: LoginInput): Promise<LoginResponse> {
       app: input.app || 'dashboard',
     })
 
-    if (!response.user || !response.access_token) {
+    if (!response.user) {
       throw new Error("Credenciales inválidas o respuesta inesperada")
     }
-
-    // Configurar token en el cliente HTTP para futuras peticiones
-    httpClient.setAuthToken(response.access_token)
 
     return response
   } catch (error) {

@@ -21,7 +21,6 @@ export type LoginResponse = Readonly<{
     lastName?: string
     fullName: string
   }
-  access_token?: string
 }>
 
 // === REFRESH TOKEN ===

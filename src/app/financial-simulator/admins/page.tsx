@@ -1,3 +1,7 @@
+import { AdminsView } from "@modules/financial-simulator";
+
 export default function FinancialSimulatorAdminsPage() {
-  return <div>Financial Simulator Admins Page</div>;
+  return (
+    <AdminsView />
+  )
 }
