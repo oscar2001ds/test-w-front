@@ -1,3 +1,7 @@
+import { HomeView } from "@modules/financial-simulator"
+
 export default function FinancialSimulatorHomePage() {
-  return <div>Financial Simulator Home Page</div>;
+  return (
+    <HomeView />
+  );
 }

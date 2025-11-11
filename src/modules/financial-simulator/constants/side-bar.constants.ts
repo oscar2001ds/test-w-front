@@ -1,6 +1,6 @@
 import { SidebarItem, SideBarMenuItem } from "../types/side-bar.types";
 import { FaHome, FaUserShield, FaUserTie, FaUserCheck, FaUser } from "react-icons/fa";
-import { GiBrainFreeze } from "react-icons/gi";
+import { HiOutlineTrendingUp } from "react-icons/hi";
 import { hasRouteAccess } from "@/src/core/config/protected-routes";
 
 
@@ -18,7 +18,7 @@ const ALL_SIDEBAR_ITEMS: SideBarMenuItem[] = [
     title: "My Simulations",
     slug: SidebarItem.MySimulations,
     url: `${BASE_URL}/my-simulations`,
-    icon: GiBrainFreeze,
+    icon: HiOutlineTrendingUp,
   },
   {
     title: "Super Admins",

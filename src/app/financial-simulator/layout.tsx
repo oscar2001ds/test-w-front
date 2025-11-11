@@ -1,7 +1,7 @@
 import { SidebarInset, SidebarProvider, SidebarTrigger } from "@/src/shared/components/ui/sidebar"
-import { AppSidebar } from "@modules/financial-simulator/components/appSidebar"
+import { AppSidebar } from "@modules/financial-simulator"
 
-export default function Layout({children}: {children: React.ReactNode}) {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <SidebarProvider>
       <AppSidebar sideBarWidth="300px" />

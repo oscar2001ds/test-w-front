@@ -19,7 +19,7 @@ import { Dialog, DialogHeader, DialogContent, DialogDescription, DialogTitle, Di
 import { useRouter } from "next/navigation";
 import { useToast } from "@/src/shared";
 
-export function AppSidebar({ sideBarWidth = "300px" }: { sideBarWidth?: string }) {
+export default function AppSidebar({ sideBarWidth = "300px" }: { sideBarWidth?: string }) {
   const router = useRouter();
   const { selectedItem, handleOptionClick, authSideBarItems } = useSidebar();
   const { logout } = useAuth();
