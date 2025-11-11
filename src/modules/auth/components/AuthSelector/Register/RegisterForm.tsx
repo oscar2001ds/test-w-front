@@ -53,7 +53,7 @@ export default function RegisterForm({ handleOptionChange }: AuthFormPreviewProp
         lastName: values.lastName
       });
       showSuccess("Registro exitoso");
-      router.push("/");
+      router.push("/financial-simulator/home");
     } catch (error) {
       if (error instanceof Error) {
         showError(`${error.message}`);

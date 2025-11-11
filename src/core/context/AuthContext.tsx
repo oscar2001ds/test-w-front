@@ -125,7 +125,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function init() {
-    console.log("AuthContext initializing...", httpClient.hasAuthToken(), httpClient.getAuthToken())
     if (httpClient.hasAuthToken()) {
       await initializeSession()
     } else {

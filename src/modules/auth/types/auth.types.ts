@@ -52,3 +52,7 @@ export type SessionResponse = {
   success: boolean
   message?: string
 }
+
+export type RefreshTokenVerificationResponse = {
+  valid: boolean
+}

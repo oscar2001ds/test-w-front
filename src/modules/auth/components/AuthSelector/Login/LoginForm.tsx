@@ -13,6 +13,7 @@ import { useBreakpoints } from "@/src/core";
 import { useToast } from "@/src/shared/hooks";
 import * as Yup from 'yup';
 import { useAuth } from "@/src/core/context/AuthContext";
+import { useRouter } from "next/navigation";
 
 const LoginFormValidationSchema = Yup.object().shape({
   email: Yup.string()
@@ -24,6 +25,7 @@ const LoginFormValidationSchema = Yup.object().shape({
 });
 
 export default function LoginForm({ handleOptionChange }: AuthFormPreviewProps) {
+  const router = useRouter();
   const { login } = useAuth();
   const { isMobile, isTablet } = useBreakpoints();
   const { showSuccess, showError } = useToast();
@@ -43,6 +45,7 @@ export default function LoginForm({ handleOptionChange }: AuthFormPreviewProps) 
         password: values.currentPassword,
       });
       showSuccess("¡Inicio de sesión exitoso!");
+      router.push("/financial-simulator/home");
     } catch (error) {
       if (error instanceof Error) {
         showError(`${error.message}`);
@@ -88,8 +91,8 @@ export default function LoginForm({ handleOptionChange }: AuthFormPreviewProps) 
                 <div className="flex items-center gap-2">
                   <Field name="remember">
                     {({ field, form }: any) => (
-                      <Checkbox 
-                        id="remember" 
+                      <Checkbox
+                        id="remember"
                         checked={field.value}
                         onCheckedChange={(checked) => form.setFieldValue('remember', checked)}
                       />
