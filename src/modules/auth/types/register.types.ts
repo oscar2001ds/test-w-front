@@ -16,7 +16,6 @@ export type RegisterResponse = Readonly<{
     lastName?: string
     fullName: string
   }
-  access_token?: string
 }>
 
 // === EMAIL VERIFICATION ===
