@@ -1,3 +1,7 @@
-export default function FinancialSimulatorMyProfilePage() {
-  return <div>Financial Simulator My Profile Page</div>;
+import { ProfileView } from "@/src/modules/financial-simulator";
+
+export default function MyProfilePage() {
+  return (
+    <ProfileView />
+  )
 }

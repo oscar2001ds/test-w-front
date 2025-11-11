@@ -15,9 +15,12 @@ import { PAGINATION_CONFIG } from "../constants/my-simulations.constants"
 import { simulationService } from "../services/simulation.service"
 import { useAuth } from "@/src/core/context/AuthContext"
 import { useToast } from "@/src/shared"
+import { useRouter, useSearchParams } from "next/navigation"
 
 export const useMySimulationsView = (): MySimulationsHookReturn => {
   // Estados principales
+  const router = useRouter();
+  const params = useSearchParams();
   const { user } = useAuth();
   const [simulations, setSimulations] = useState<SimulationItem[]>([])
   const [isLoading, setIsLoading] = useState(true)
@@ -286,6 +289,14 @@ export const useMySimulationsView = (): MySimulationsHookReturn => {
       setViewSettings(prev => ({ ...prev, currentPage: totalPages }))
     }
   }, [viewSettings.currentPage, totalPages])
+
+  useEffect(() => {
+    if (params.get('create') === 'true') {
+      openCreateModal()
+      // Borrar el parámetro de la URL después de abrir el modal
+      router.replace('/financial-simulator/my-simulations', { scroll: false })
+    }
+  }, [params])
 
   return {
     // Data
