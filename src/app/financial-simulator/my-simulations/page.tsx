@@ -1,3 +1,7 @@
+import MySimulationsView from "@/src/modules/financial-simulator/components/mySimulationsView";
+
 export default function FinancialSimulatorMySimulationsPage() {
-  return <div>Financial Simulator My Simulations Page</div>;
+  return (
+    <MySimulationsView />
+  )
 }

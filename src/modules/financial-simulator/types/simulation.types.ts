@@ -12,9 +12,12 @@ export interface UserSimulation {
   currency: string
   returnRate: number
   paymentMethod: 'monthly' | 'annual'
-  createdAt: string
-  lastUpdated: string
+  startDate: string
+  endDate: string
+  termMonths: number
   status: 'active' | 'completed' | 'paused'
+  createdAt: string
+  updatedAt: string
 }
 
 // Get User Simulations
@@ -60,6 +63,7 @@ export interface SimulationStats {
   totalSimulations: number
   averageReturn: number
   activeDays: number
+  activeSimulations: number
 }
 
 export interface SimulationStatsResponse {

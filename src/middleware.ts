@@ -10,16 +10,22 @@ export async function middleware(request: NextRequest) {
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
 
     // Verificar si el refresh token es válido
-    const response = await fetch(`${baseUrl}/auth/verify-refresh`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        ...(cookieHeader && { 'Cookie': cookieHeader }),
-      },
-      credentials: 'include',
-    })
-    const data = await response.json()
-    const isValidSession = data.valid === true
+    let isValidSession = false
+    try {
+      const response = await fetch(`${baseUrl}/auth/verify-refresh`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          ...(cookieHeader && { 'Cookie': cookieHeader }),
+        },
+        credentials: 'include',
+      })
+      const data = await response.json()
+      console.log('✅ [AUTH-MIDDLEWARE] Verificación de refresh token:', response.status, data)
+      isValidSession = response.ok && data.valid
+    } catch (error) {
+      console.error('❌ [AUTH-MIDDLEWARE] Error en verificación de refresh token:', error)
+    }
 
     if (isValidSession && pathname.startsWith('/auth')) {
       console.log(`🚫 [AUTH-MIDDLEWARE] Ya autenticado, redirigiendo desde: ${pathname}`)

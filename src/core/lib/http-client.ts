@@ -100,6 +100,20 @@ class HttpClient {
     })
   }
 
+  async patch<T>(
+    endpoint: string,
+    body?: any,
+    headers?: HeadersInit
+  ): Promise<T> {
+    return this.request<T>(endpoint, {
+      method: 'PATCH',
+      body: body ? JSON.stringify(body) : undefined,
+      headers,
+      credentials: 'include',
+      cache: 'no-store',
+    })
+  }
+
   async delete<T>(endpoint: string, headers?: HeadersInit): Promise<T> {
     return this.request<T>(endpoint, {
       method: 'DELETE',

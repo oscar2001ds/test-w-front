@@ -82,6 +82,13 @@ export const SimulationCard = ({ simulation, onClick, editable }: SimulationCard
           </span>
         </div>
 
+                <div className="flex items-center justify-between">
+          <span className="text-sm text-gray-600">Duración:</span>
+          <span className="font-medium text-gray-900">
+            {simulation.termMonths} meses
+          </span>
+        </div>
+
         <div className="flex items-center justify-between">
           <span className="text-sm text-gray-600">Método:</span>
           <span className="font-medium text-gray-900">
@@ -94,7 +101,7 @@ export const SimulationCard = ({ simulation, onClick, editable }: SimulationCard
       <div className="pt-2 border-t border-gray-200">
         <div className="flex items-center gap-1 text-xs text-gray-500">
           <Calendar className="h-3 w-3" />
-          <span>Actualizada: {formatDate(simulation.lastUpdated)}</span>
+          <span>Fecha inicio: {formatDate(simulation.startDate)}</span>
         </div>
       </div>
     </div>
