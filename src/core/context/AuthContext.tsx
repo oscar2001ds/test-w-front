@@ -22,7 +22,7 @@ import {
   RegisterInput,
   registerService
 } from "@/src/modules/auth"
-import { httpClient } from "@core/lib/http-client"
+import { useRouter } from "next/navigation"
 
 interface AuthContextValue {
   user: User | null
@@ -49,6 +49,7 @@ export const AuthContext = createContext<AuthContextValue>({
 })
 
 export function AuthProvider({ children }: { children: ReactNode }) {
+  const router = useRouter()
   const [user, setUser] = useState<User | null>(null)
   const [isLoading, setIsLoading] = useState(true)
 
@@ -74,10 +75,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       setIsLoading(true)
       const response = await refreshAccessTokenService()
       if (response.success && response.access_token) {
-        httpClient.setAuthToken(response.access_token)
         await initializeSession()
       }
       setIsLoading(false)
+      router.refresh()
     } catch (error) {
       console.info(error)
       setIsLoading(false)
@@ -125,11 +126,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   async function init() {
-    if (httpClient.hasAuthToken()) {
-      await initializeSession()
-    } else {
-      await refetchUser()
-    }
+    await initializeSession()
   }
 
   useEffect(() => {

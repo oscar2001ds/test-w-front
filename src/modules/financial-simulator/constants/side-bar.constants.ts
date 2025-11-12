@@ -1,8 +1,8 @@
 import { SidebarItem, SideBarMenuItem } from "../types/side-bar.types";
-import { FaHome, FaUserShield, FaUserTie, FaUserCheck, FaUser } from "react-icons/fa";
+import { FaHome, FaUserShield, FaUserTie, FaUserCheck, FaUser, FaUsers } from "react-icons/fa";
 import { HiOutlineTrendingUp } from "react-icons/hi";
 import { hasRouteAccess } from "@/src/core/config/protected-routes";
-
+import { UserRole } from "../../auth";
 
 export const BASE_URL = "/financial-simulator";
 
@@ -39,6 +39,12 @@ const ALL_SIDEBAR_ITEMS: SideBarMenuItem[] = [
     icon: FaUserCheck,
   },
   {
+    title: "Clients",
+    slug: SidebarItem.Clients,
+    url: `${BASE_URL}/clients`,
+    icon: FaUsers,
+  },
+  {
     title: "My Profile",
     slug: SidebarItem.MyProfile,
     url: `${BASE_URL}/my-profile`,
@@ -47,7 +53,7 @@ const ALL_SIDEBAR_ITEMS: SideBarMenuItem[] = [
 ]
 
 // Función para obtener items filtrados por permisos
-export function getFilteredSidebarItems(userRole?: string): SideBarMenuItem[] {
+export function getFilteredSidebarItems(userRole?: UserRole): SideBarMenuItem[] {
   return ALL_SIDEBAR_ITEMS.filter(item => hasRouteAccess(item.slug, userRole))
 }
 

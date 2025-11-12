@@ -5,11 +5,13 @@ import { useEffect, useState } from "react";
 import { SidebarItem, SideBarMenuItem } from "../types/side-bar.types";
 import { BASE_URL, getFilteredSidebarItems } from "../constants/side-bar.constants";
 import { useAuth } from "@/src/core/context/AuthContext";
+import { useToast } from "@/src/shared";
 
 export function useSidebar() {
   const router = useRouter();
   const pathname = usePathname();
-  const { user } = useAuth();
+  const { user, logout } = useAuth();
+  const { showSuccess, showError } = useToast();
   const [selectedItem, setSelectedItem] = useState<SidebarItem | null>(null);
   const [authSideBarItems, setAuthSideBarItems] = useState<SideBarMenuItem[]>([]);
 
@@ -17,6 +19,17 @@ export function useSidebar() {
     setSelectedItem(item.slug);
     router.push(item.url);
   };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      showSuccess("Sesión cerrada exitosamente.");
+      router.push("/auth");
+    } catch (error) {
+      showError("Error al cerrar sesión.");
+      console.error(error);
+    }
+  }
 
   // Detectar item seleccionado basado en la URL
   useEffect(() => {
@@ -36,7 +49,8 @@ export function useSidebar() {
 
   return {
     selectedItem,
-    handleOptionClick,
     authSideBarItems,
+    handleOptionClick,
+    handleLogout,
   };
 }

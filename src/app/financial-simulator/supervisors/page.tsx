@@ -1,3 +1,7 @@
+import { UsersView } from "@modules/financial-simulator";
+
 export default function FinancialSimulatorSupervisorsPage() {
-  return <div>Financial Simulator Supervisors Page</div>;
+  return (
+     <UsersView userRole="supervisor" />
+  )
 }

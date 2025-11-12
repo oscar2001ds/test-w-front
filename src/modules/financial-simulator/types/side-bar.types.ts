@@ -4,6 +4,7 @@ export enum SidebarItem {
   SuperAdmins = "super-admins",
   Admins = "admins",
   Supervisors = "supervisors",
+  Clients = "clients",
   MyProfile = "my-profile",
 }
 
