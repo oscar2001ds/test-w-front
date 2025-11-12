@@ -1,7 +1,7 @@
-import { ClientsView } from "@modules/financial-simulator";
+import { UsersView } from "@modules/financial-simulator";
 
 export default function FinancialSimulatorClientsPage() {
   return (
-    <ClientsView />
+    <UsersView userRole="client" />
   );
 }

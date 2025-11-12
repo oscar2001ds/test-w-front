@@ -1,7 +1,7 @@
-import { AdminsView } from "@modules/financial-simulator";
+import { UsersView } from "@modules/financial-simulator";
 
 export default function FinancialSimulatorAdminsPage() {
   return (
-    <AdminsView />
+    <UsersView userRole="admin" />
   )
 }

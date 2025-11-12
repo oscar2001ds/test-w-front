@@ -75,4 +75,5 @@ export interface SimulationStatsResponse {
   totalProjectedReturns: number;
   averageReturnRate: number;
   userActiveDays: number;
+  lastSimulationDate: string;
 }

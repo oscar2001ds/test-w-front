@@ -16,7 +16,7 @@ export const ROUTE_PERMISSIONS = {
 export function hasRouteAccess(route: SidebarItem, userRole?: UserRole): boolean {
   switch (route) {
     case SidebarItem.SuperAdmins:
-      return ['super-admin'].includes(userRole || '')
+      return ['super-adminnnnn'].includes(userRole || '')
     case SidebarItem.Admins:
       return ['super-admin'].includes(userRole || '')
     case SidebarItem.Supervisors:
