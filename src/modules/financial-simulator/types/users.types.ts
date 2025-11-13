@@ -30,7 +30,6 @@ export interface UsersOverviewStats {
   inactiveUsers: number
   totalInvestments: number
   averageReturn: number
-  newUsersThisMonth: number
 }
 
 // Filtros simplificados (sin rol)
@@ -70,9 +69,17 @@ export interface GetUsersParams {
 }
 
 // Respuesta del API
-export interface GetUsersResponse {
+export interface GetUsersWithStatsResponse {
   user: Omit<UserData, 'stats'>
   stats: SimulationStatsResponse
+}
+
+export interface GetOverviewStatsResponse {
+  totalUsers: number
+  activeUsers: number
+  inactiveUsers: number
+  totalInvestments: number
+  averageReturn: number
 }
 
 // Hook return type
@@ -84,6 +91,8 @@ export interface UsersViewHookReturn {
   isLoading: boolean
   updateFilters: (newFilters: Partial<UserFilters>) => void
   changeUserRole: (userId: string, newRole: string) => Promise<void>
+  changeUserStatus: (userId: string, isActive: boolean) => Promise<void>
+  refreshView: () => Promise<void>
 }
 
 // Payload para actualizar rol

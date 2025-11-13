@@ -6,9 +6,6 @@ import {
   UserData,
   UsersOverviewStats,
   UserFilters,
-  UserViewSettings,
-  RoleChangeModalState,
-  UserDetailsModalState,
   UpdateUserRolePayload,
 } from "../types/users.types"
 import { ERROR_MESSAGES, SUCCESS_MESSAGES } from "../constants/users.constants"
@@ -18,7 +15,6 @@ import { UserRole } from "../../auth"
 import { userService } from "../services/user.service"
 
 export const useUsersView = (userRole: UserRole): UsersViewHookReturn => {
-  // Estados principales
   const { user } = useAuth()
   const [users, setUsers] = useState<UserData[]>([])
   const [isLoading, setIsLoading] = useState(false)
@@ -28,7 +24,6 @@ export const useUsersView = (userRole: UserRole): UsersViewHookReturn => {
     inactiveUsers: 0,
     totalInvestments: 0,
     averageReturn: 0,
-    newUsersThisMonth: 0
   })
   const { showSuccess, showError } = useToast()
   const [error, setError] = useState<string | null>(null)
@@ -53,6 +48,22 @@ export const useUsersView = (userRole: UserRole): UsersViewHookReturn => {
     }
   }, [user])
 
+  const fetchOverviewStats = useCallback(async () => {
+    try {
+      setIsLoading(true)
+      setError(null)
+      if (user) {
+        const statsResponse = await userService.getUsersOverviewStats({ userRole })
+        if (statsResponse) setOverviewStats(statsResponse)
+      }
+    } catch (err) {
+      console.error(err)
+      showError('Error al cargar las estadísticas de usuarios')
+    } finally {
+      setIsLoading(false)
+    }
+  }, [user])
+
   // Función para actualizar filtros
   const updateFilters = (newFilters: Partial<UserFilters>) => {
     setFilters((prev) => ({ ...prev, ...newFilters }))
@@ -66,25 +77,65 @@ export const useUsersView = (userRole: UserRole): UsersViewHookReturn => {
       const fullName = `${user.firstName} ${user.lastName}`.toLowerCase()
       const email = user.email.toLowerCase()
       const searchTerm = filters.search.toLowerCase()
+      const statusFilter = filters.status
 
-      return fullName.includes(searchTerm) || email.includes(searchTerm)
+      return (fullName.includes(searchTerm) || email.includes(searchTerm)) &&
+        (statusFilter === 'all' || (statusFilter === 'active' && user.isActive) || (statusFilter === 'inactive' && !user.isActive))
     })
   }, [users, filters])
 
+  // Función para cambiar el estado de un usuario
+  const changeUserStatus = async (userId: string, isActive: boolean) => {
+    try {
+      const userUpdated = await userService.updateUser(userId, { isActive })
+      if (userUpdated) {
+        showSuccess(SUCCESS_MESSAGES.statusChanged)
+        fetchUsers()
+        fetchOverviewStats()
+      } else {
+        showError(ERROR_MESSAGES.updateRole)
+      }
+    } catch (error) {
+      console.error('Error changing user status:', error)
+      showError(ERROR_MESSAGES.updateRole)
+    }
+  }
+
+  // Función para refrescar la vista
+  const refreshView = async () => {
+    await fetchUsers()
+    await fetchOverviewStats()
+  }
+
   // Función para cambiar el rol de un usuario
   const changeUserRole = async (userId: string, newRole: string) => {
-    return new Promise<void>((resolve) => {
-      setTimeout(() => {
-        showSuccess(SUCCESS_MESSAGES.dataExported)
-        resolve()
-      }, 1000)
-    })
+    try {
+      const payload: UpdateUserRolePayload = {
+        userId,
+        newRole: newRole as UserRole,
+      }
+      const userUpdated = await userService.updateUser(userId, { role: newRole })
+      if (userUpdated) {
+        showSuccess(SUCCESS_MESSAGES.roleUpdated)
+        fetchUsers()
+      } else {
+        showError(ERROR_MESSAGES.updateRole)
+      }
+    } catch (error) {
+      console.error('Error changing user role:', error)
+      showError(ERROR_MESSAGES.updateRole)
+    }
   }
 
   // Efecto para obtener usuarios
   useEffect(() => {
     fetchUsers()
   }, [fetchUsers])
+
+  // Efecto para obtener estadísticas generales
+  useEffect(() => {
+    fetchOverviewStats()
+  }, [fetchOverviewStats])
 
   return {
     users,
@@ -93,6 +144,8 @@ export const useUsersView = (userRole: UserRole): UsersViewHookReturn => {
     overviewStats,
     isLoading,
     updateFilters,
-    changeUserRole
+    changeUserRole,
+    changeUserStatus,
+    refreshView
   }
 }

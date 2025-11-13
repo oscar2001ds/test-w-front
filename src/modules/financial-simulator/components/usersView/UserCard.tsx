@@ -4,20 +4,12 @@ import React from 'react'
 import { Eye, Edit, UserCheck, UserX } from 'lucide-react'
 import { UserData } from '../../types/users.types'
 import { ROLE_COLORS } from '../../constants/users.constants'
+import { formatCurrency, formatPercentage } from '@/src/shared/utils/formatters'
 
 interface UserCardProps {
   user: UserData
-  onEditRole: (user: UserData) => void
+  onEdit: (user: UserData) => void
   onViewDetails: (user: UserData) => void
-}
-
-const formatCurrency = (amount: number) => {
-  return new Intl.NumberFormat('es-CO', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(amount)
 }
 
 const formatTimeAgo = (dateString: string) => {
@@ -33,7 +25,7 @@ const formatTimeAgo = (dateString: string) => {
   return `Hace ${Math.floor(diffDays / 30)} meses`
 }
 
-export function UserCard({ user, onEditRole, onViewDetails }: UserCardProps) {
+export function UserCard({ user, onEdit, onViewDetails }: UserCardProps) {
   const roleColorClass = ROLE_COLORS[user.role as keyof typeof ROLE_COLORS] || 'bg-gray-100 text-gray-800'
 
   return (
@@ -82,7 +74,7 @@ export function UserCard({ user, onEditRole, onViewDetails }: UserCardProps) {
             <div className="text-xs text-green-700">Invertido</div>
           </div>
           <div className="flex-1 min-w-[200px] bg-purple-50 rounded-lg p-3 text-center">
-            <div className="text-2xl font-bold text-purple-600">{user.stats.averageReturn}%</div>
+            <div className="text-2xl font-bold text-purple-600">{formatPercentage(user.stats.averageReturn)}</div>
             <div className="text-xs text-purple-700">Retorno Prom.</div>
           </div>
           <div className="flex-1 min-w-[200px] bg-orange-50 rounded-lg p-3 text-center">
@@ -113,11 +105,11 @@ export function UserCard({ user, onEditRole, onViewDetails }: UserCardProps) {
             Ver Detalles
           </button>
           <button
-            onClick={() => onEditRole(user)}
+            onClick={() => onEdit(user)}
             className="flex-1 flex items-center justify-center px-3 py-2 text-sm border border-gray-300 rounded-lg text-gray-600 hover:text-gray-800 hover:bg-gray-50"
           >
             <Edit className="h-4 w-4 mr-2" />
-            Editar Rol
+            Editar
           </button>
         </div>
       </div>

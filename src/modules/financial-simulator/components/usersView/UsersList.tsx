@@ -7,7 +7,7 @@ import { ROLE_COLORS } from '../../constants/users.constants'
 
 interface UsersListProps {
   users: UserData[]
-  onEditRole: (user: UserData) => void
+  onEdit: (user: UserData) => void
   onViewDetails: (user: UserData) => void
 }
 
@@ -33,7 +33,7 @@ const formatTimeAgo = (dateString: string) => {
   return `Hace ${Math.floor(diffDays / 30)} meses`
 }
 
-export function UsersList({ users, onEditRole, onViewDetails }: UsersListProps) {
+export function UsersList({ users, onEdit, onViewDetails }: UsersListProps) {
   return (
     <div className="bg-white rounded-lg shadow-lg overflow-hidden">
       <div className="overflow-x-auto">
@@ -111,7 +111,7 @@ export function UsersList({ users, onEditRole, onViewDetails }: UsersListProps) 
                         Ver
                       </button>
                       <button
-                        onClick={() => onEditRole(user)}
+                        onClick={() => onEdit(user)}
                         className="inline-flex items-center px-2 py-1 text-xs border border-gray-300 rounded text-gray-600 hover:text-gray-800 hover:bg-gray-50"
                       >
                         <Edit className="h-3 w-3 mr-1" />

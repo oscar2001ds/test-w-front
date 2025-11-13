@@ -1,7 +1,8 @@
+import { UserRole } from "@/src/modules/auth";
 import { UsersView } from "@modules/financial-simulator";
 
 export default function FinancialSimulatorAdminsPage() {
   return (
-    <UsersView userRole="admin" />
+    <UsersView userRole={UserRole.Admin} />
   )
 }

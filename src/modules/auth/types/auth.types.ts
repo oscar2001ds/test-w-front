@@ -32,7 +32,13 @@ export type RefreshTokenResponse = {
 }
 
 // === SESSION ===
-export type UserRole = 'super-admin' | 'admin' | 'supervisor' | 'client'
+export enum UserRole {
+  SuperAdmin = 'super-admin',
+  Admin = 'admin',
+  Supervisor = 'supervisor',
+  Client = 'client',
+  None = 'none'
+}
 
 export type User = Readonly<{
   id: string

@@ -7,6 +7,7 @@ import {
   User,
 } from 'lucide-react'
 import { ProfileHeaderProps } from '../../types/profile.types'
+import { formatCurrency } from "@/src/shared/utils/formatters"
 
 const getRoleColor = (role?: string) => {
   switch (role) {
@@ -16,15 +17,6 @@ const getRoleColor = (role?: string) => {
     case 'client': return 'bg-green-100 text-green-800 hover:bg-green-200'
     default: return 'bg-gray-100 text-gray-800 hover:bg-gray-200'
   }
-}
-
-const formatCurrency = (amount: number) => {
-  return new Intl.NumberFormat('es-CO', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(amount)
 }
 
 const formatTimeAgo = (date: Date) => {
@@ -44,16 +36,6 @@ export function ProfileHeader({
   user,
   stats,
 }: ProfileHeaderProps) {
-  const getInitials = (name: string) => {
-    return name
-      .split(' ')
-      .map(word => word.charAt(0))
-      .join('')
-      .toUpperCase()
-      .slice(0, 2)
-  }
-
-  const memberSince = new Date(stats.activeDays)
   const lastActivity = stats.lastActivity ? new Date(stats.lastActivity) : null
 
   return (
@@ -138,7 +120,7 @@ export function ProfileHeader({
 
         <div className="text-center p-2 sm:p-0">
           <div className="text-lg sm:text-xl lg:text-2xl font-bold text-green-600">
-            <span className="sm:hidden">{formatCurrency(stats.totalInvested).replace('US$', '$')}</span>
+            <span className="sm:hidden">{formatCurrency(stats.totalInvested).replace('COP$', '$')}</span>
             <span className="hidden sm:inline">{formatCurrency(stats.totalInvested)}</span>
           </div>
           <div className="text-xs sm:text-sm text-gray-600">Invertido</div>

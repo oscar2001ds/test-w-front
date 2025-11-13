@@ -5,6 +5,7 @@ import { Grid, List, RefreshCw, Search, X } from 'lucide-react'
 import {
   UserFilters as UserFiltersType,
 } from '../../types/users.types'
+import { STATUS_OPTIONS } from '../../constants/users.constants'
 
 interface UserFiltersProps {
   filters: UserFiltersType
@@ -46,6 +47,19 @@ export function UserFilters({
             />
           </div>
         </div>
+
+        {/* Filtro por estado */}
+        <select
+          className="px-3 py-2 border border-gray-300 rounded-md text-sm focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+          value={filters.status}
+          onChange={(e) => onFiltersChange({ status: e.target.value as UserFiltersType['status'] })}
+        >
+          {STATUS_OPTIONS.map(option => (
+            <option key={option.value} value={option.value}>
+              {option.label}
+            </option>
+          ))}
+        </select>
 
         {/* Right Action Buttons */}
         <div className="flex items-center gap-2">
