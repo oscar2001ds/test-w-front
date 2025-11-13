@@ -24,7 +24,7 @@ export const MySimulationCard = ({
   onDelete,
 }: SimulationCardProps) => {
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('es-ES', {
+    return new Date(dateString.split('T')[0].concat('T00:00:00')).toLocaleDateString('es-ES', {
       day: '2-digit',
       month: 'short',
       year: 'numeric'

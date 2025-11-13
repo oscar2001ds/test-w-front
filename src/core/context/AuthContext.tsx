@@ -133,9 +133,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     init()
   }, [])
 
-  useEffect(() => {
-    console.log("AuthContext user changed:", user)
-  }, [user])
+  // useEffect(() => {
+  //   console.log("AuthContext user changed:", user)
+  // }, [user])
 
   return (
     <AuthContext.Provider

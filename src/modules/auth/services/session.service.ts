@@ -12,7 +12,8 @@ export async function sessionService(): Promise<User | null> {
     return response.user
   } catch (error) {
     if (error instanceof Error) {
-      throw new Error(`${error.message}`)
+      console.warn("Session service error:", error.message)
+      return null
     }
     throw new Error("Error al obtener la sesión")
   }
