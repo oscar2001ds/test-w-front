@@ -1,4 +1,4 @@
-import { SetPasswordForm } from "@modules/authorization";
+import { SetPasswordForm } from "@/src/modules/auth";
 
 export default function SetPasswordPage() {
   return (

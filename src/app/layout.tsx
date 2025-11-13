@@ -2,8 +2,10 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono, Poppins } from "next/font/google";
 import "./globals.css";
 import { Suspense } from "react";
+import { Toaster } from "react-hot-toast";
 import AOSProvider from "../core/context/AosContext";
 import { BreakpointsProvider } from "../core";
+import { AuthProvider } from "../core/context/AuthContext";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -45,12 +47,43 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} ${poppins.variable} antialiased`}
       >
         <Suspense>
-          <BreakpointsProvider>
-            <AOSProvider>
-              {children}
-            </AOSProvider>
-          </BreakpointsProvider>
+          <AuthProvider>
+            <BreakpointsProvider>
+              <AOSProvider>
+                {children}
+              </AOSProvider>
+            </BreakpointsProvider>
+          </AuthProvider>
         </Suspense>
+        <Toaster
+          position="bottom-right"
+          toastOptions={{
+            duration: 4000,
+            style: {
+              background: '#363636',
+              color: '#fff',
+              borderRadius: '12px',
+              padding: '16px',
+              fontSize: '14px',
+              fontFamily: 'var(--font-poppins)',
+            },
+            success: {
+              style: {
+                background: '#10B981',
+              },
+            },
+            error: {
+              style: {
+                background: '#EF4444',
+              },
+            },
+            loading: {
+              style: {
+                background: '#3B82F6',
+              },
+            },
+          }}
+        />
       </body>
     </html>
   );
