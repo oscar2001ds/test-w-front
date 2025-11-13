@@ -1,4 +1,4 @@
-# 💼 Financial Simulator Platform
+# 🏦 Test Banco W - Sistema de Simulaciones Financieras
 
 Una plataforma moderna de simulación financiera construida con **Next.js 16**, **TypeScript**, **Tailwind CSS** y **Radix UI**, que permite a diferentes tipos de usuarios gestionar simulaciones de inversión con un sistema de roles jerárquico.
 
@@ -132,57 +132,18 @@ test-w-front/
 - **Estilos**: Tailwind CSS + CSS Modules
 - **Componentes**: Radix UI + shadcn/ui
 - **Formularios**: Formik + Yup
-- **Iconos**: Lucide React + React Icons
+- **Iconos**: Lucide React
 - **Notificaciones**: React Hot Toast
 - **Animaciones**: AOS (Animate On Scroll)
-
-### 🎯 Patrones de Diseño
-
-#### **1. Arquitectura Modular**
-```typescript
-// Cada módulo es independiente y autocontenido
-modules/
-├── auth/           # Autenticación y autorización
-└── financial-simulator/ # Funcionalidad principal
-```
-
-#### **2. Sistema de Componentes Reutilizables**
-```typescript
-// Componentes base en shared/components/ui/
-import { Button } from '@/shared/components/ui/button'
-import { Dialog } from '@/shared/components/ui/dialog'
-```
-
-#### **3. Hooks Personalizados**
-```typescript
-// Lógica de estado encapsulada en hooks
-const { users, updateFilters, changeUserRole } = useUsersView(userType)
-```
-
-#### **4. Tipos TypeScript Estrictos**
-```typescript
-// Tipado completo para mejor DX
-interface UserData {
-  id: string
-  role: 'client' | 'supervisor' | 'admin'
-  isActive: boolean
-}
-```
 
 ## 👥 Sistema de Roles y Permisos
 
 ### 🔐 Jerarquía de Roles
 
-```mermaid
-graph TD
-    A[Admin] --> B[Supervisor]
-    B --> C[Cliente]
-    A --> C
-```
-
 | Rol | Permisos | Descripción |
 |-----|----------|-------------|
-| **Admin** | 🔧 Gestión completa | Puede gestionar supervisores y clientes |
+| **Super Admin** | 🛠️ Gestión completa | Puede gestionar administradores, supervisores y clientes |
+| **Admin** | 🔧 Gestión parcialmente completa | Puede gestionar supervisores y clientes |
 | **Supervisor** | 👀 Gestión limitada | Puede gestionar solo clientes |
 | **Cliente** | 📊 Solo simulaciones | Acceso únicamente a sus simulaciones |
 
@@ -191,63 +152,10 @@ graph TD
 ```typescript
 // Configuración en src/core/config/protected-routes.ts
 const roleAccess = {
-  '/financial-simulator/admins': ['admin'],
-  '/financial-simulator/supervisors': ['admin', 'supervisor'], 
-  '/financial-simulator/clients': ['admin', 'supervisor'],
-  '/financial-simulator/home': ['admin', 'supervisor', 'client']
+  '/financial-simulator/admins': ['super-admin', 'admin'],
+  '/financial-simulator/supervisors': ['super-admin', 'admin'], 
+  '/financial-simulator/clients': ['super-admin', 'admin', 'supervisor'],
 }
-```
-
-## 🧩 Componentes Principales
-
-### **🏠 Vista de Dashboard**
-```typescript
-// Estadísticas generales y navegación
-<UsersOverview stats={overviewStats} isLoading={isLoading} />
-```
-
-### **👤 Gestión de Usuarios**
-```typescript
-// Sistema completo de CRUD de usuarios
-<UsersView userType="clients" /> // Dinámico por tipo de usuario
-```
-
-### **⚙️ Modal de Edición**
-```typescript
-// Edición con limitaciones por rol
-<EditionModal 
-  user={selectedUser}
-  onConfirm={(user, updates) => handleUserUpdate(user, updates)}
-/>
-```
-
-### **🔍 Filtros Inteligentes**
-```typescript
-// Búsqueda y filtrado en tiempo real
-<UserFilters 
-  filters={filters}
-  onFiltersChange={updateFilters}
-/>
-```
-
-## 🎨 Sistema de Diseño
-
-### **🎨 Colores por Rol**
-```typescript
-const ROLE_COLORS = {
-  client: 'bg-blue-100 text-blue-800',
-  supervisor: 'bg-green-100 text-green-800', 
-  admin: 'bg-purple-100 text-purple-800'
-}
-```
-
-### **📱 Breakpoints Responsivos**
-```css
-/* Configuración Tailwind */
-sm: '640px'   /* Tablet */
-md: '768px'   /* Desktop pequeño */
-lg: '1024px'  /* Desktop mediano */
-xl: '1280px'  /* Desktop grande */
 ```
 
 ## 🔧 Scripts Disponibles
@@ -264,71 +172,12 @@ npm run start        # Servidor de producción
 npm run lint         # Ejecutar ESLint
 ```
 
-## 🌐 Variables de Entorno
+## 🎉 Conclusión
 
-| Variable | Descripción | Ejemplo |
-|----------|-------------|---------|
-| `NEXT_PUBLIC_API_URL` | URL del backend API | `http://localhost:4000` |
-
-> ⚠️ **Importante**: Crea un archivo `.env` basado en `.env.example` antes de ejecutar el proyecto.
-
-## 🚀 Despliegue
-
-### **Vercel (Recomendado)**
-```bash
-# Instalar Vercel CLI
-npm i -g vercel
-
-# Desplegar
-vercel
-```
-
-### **Build Manual**
-```bash
-npm run build
-npm run start
-```
-
-## 🤝 Contribución
-
-1. Fork el repositorio
-2. Crea una rama feature (`git checkout -b feature/nueva-funcionalidad`)
-3. Commit tus cambios (`git commit -m 'Agregar nueva funcionalidad'`)
-4. Push a la rama (`git push origin feature/nueva-funcionalidad`)
-5. Abre un Pull Request
-
-## 📝 Convenciones de Código
-
-- **Componentes**: PascalCase (`UserCard.tsx`)
-- **Hooks**: camelCase con prefijo `use` (`useUsersView.ts`)
-- **Tipos**: PascalCase con sufijo (`UserData`, `UsersViewProps`)
-- **Constantes**: UPPER_SNAKE_CASE (`ROLE_COLORS`)
-
-## 🐛 Troubleshooting
-
-### **Problema**: Error de compilación TypeScript
-```bash
-# Limpiar caché de TypeScript
-rm -rf .next
-npm run dev
-```
-
-### **Problema**: Estilos no se cargan
-```bash
-# Verificar que Tailwind esté configurado
-npm run build
-```
-
-## 📄 Licencia
-
-Este proyecto está bajo la licencia MIT. Ver `LICENSE` para más detalles.
-
-## 📞 Soporte
-
-Para reportar bugs o solicitar funcionalidades:
-- 📧 Email: [tu-email@ejemplo.com]
-- 🐛 Issues: [GitHub Issues](https://github.com/oscar2001ds/test-w-front/issues)
+Gracias por tomarse el tiempo de revisar mi prueba. La desarrollé con mucho esfuerzo y dedicación, buscando entregar un resultado que realmente valiera la pena.  
+Si tienen alguna inquietud o comentario, pueden contactarme al número de abajo. Un Saludo, espero podernos ver pronto!
+- 🟢 WhatsApp: 3124204039 
 
 ---
 
-**Desarrollado con ❤️ usando Next.js y TypeScript**
+**Desarrollado con ❤️**
