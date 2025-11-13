@@ -8,7 +8,7 @@ import { UsersOverview } from './UsersOverview'
 import { UserFilters } from './UserFilters'
 import { UserCard } from './UserCard'
 import { UsersList } from './UsersList'
-import { RoleChangeModal } from './RoleChangeModal'
+import { EditionModal } from './EditionModal'
 import { UserDetailsModal } from './UserDetailsModal'
 import { UserRole } from '@/src/modules/auth'
 
@@ -24,19 +24,21 @@ export default function UsersView({ userRole }: UsersViewProps) {
     overviewStats,
     isLoading,
     updateFilters,
-    changeUserRole
+    changeUserRole,
+    changeUserStatus,
+    refreshView
   } = useUsersView(userRole)
 
   const [selectedUser, setSelectedUser] = useState<UserData | null>(null)
-  const [showRoleModal, setShowRoleModal] = useState(false)
+  const [showEditionModal, setEditionRoleModal] = useState(false)
   const [showDetailsModal, setShowDetailsModal] = useState(false)
   const [viewMode, setViewMode] = useState<'cards' | 'list'>('cards')
 
   const pageTitle = PAGE_TITLES[userRole]
 
-  const handleEditRole = (user: UserData) => {
+  const handleEdit = (user: UserData) => {
     setSelectedUser(user)
-    setShowRoleModal(true)
+    setEditionRoleModal(true)
   }
 
   const handleViewDetails = (user: UserData) => {
@@ -44,18 +46,25 @@ export default function UsersView({ userRole }: UsersViewProps) {
     setShowDetailsModal(true)
   }
 
-  const handleRoleChange = async (user: UserData, newRole: string) => {
+  const handleUserUpdate = async (user: UserData, updates: { role?: string; isActive?: boolean }) => {
     try {
-      await changeUserRole(user.id, newRole)
-      setShowRoleModal(false)
+      // Manejar cambios de rol
+      if (updates.role) {
+        await changeUserRole(user.id, updates.role)
+      }
+      // Manejar cambios de estado
+      if (updates.isActive !== undefined) {
+        await changeUserStatus(user.id, updates.isActive)
+      }
+      setEditionRoleModal(false)
       setSelectedUser(null)
     } catch (error) {
-      console.error('Error changing user role:', error)
+      console.error('Error updating user:', error)
     }
   }
 
   const handleCloseModals = () => {
-    setShowRoleModal(false)
+    setEditionRoleModal(false)
     setShowDetailsModal(false)
     setSelectedUser(null)
   }
@@ -97,7 +106,7 @@ export default function UsersView({ userRole }: UsersViewProps) {
             filters={filters}
             onFiltersChange={updateFilters}
             onLayoutChange={setViewMode}
-            onRefresh={() => Promise.resolve()}
+            onRefresh={refreshView}
             isLoading={isLoading}
             viewSettings={{ layout: viewMode }}
           />
@@ -110,7 +119,7 @@ export default function UsersView({ userRole }: UsersViewProps) {
               <UserCard
                 key={user.id}
                 user={user}
-                onEditRole={handleEditRole}
+                onEdit={handleEdit}
                 onViewDetails={handleViewDetails}
               />
             ))}
@@ -118,7 +127,7 @@ export default function UsersView({ userRole }: UsersViewProps) {
         ) : (
           <UsersList
             users={filteredUsers}
-            onEditRole={handleEditRole}
+            onEdit={handleEdit}
             onViewDetails={handleViewDetails}
           />
         )}
@@ -136,11 +145,11 @@ export default function UsersView({ userRole }: UsersViewProps) {
         )}
 
         {/* Modals */}
-        <RoleChangeModal
-          isOpen={showRoleModal}
+        <EditionModal
+          isOpen={showEditionModal}
           onClose={handleCloseModals}
           user={selectedUser}
-          onConfirm={handleRoleChange}
+          onConfirm={handleUserUpdate}
         />
 
         <UserDetailsModal

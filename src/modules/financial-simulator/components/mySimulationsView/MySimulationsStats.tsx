@@ -3,6 +3,7 @@
 import { TrendingUp, DollarSign, Calendar } from "lucide-react"
 import { SimulationStats } from "../../types/my-simulations.types"
 import { STATS_LABELS } from "../../constants/my-simulations.constants"
+import { formatCurrency, formatPercentage } from "@/src/shared/utils/formatters"
 
 interface MySimulationsStatsProps {
   stats: SimulationStats
@@ -35,18 +36,6 @@ const StatCard = ({
 )
 
 export const MySimulationsStats = ({ stats }: MySimulationsStatsProps) => {
-  const formatCurrency = (amount: number) => {
-    if (amount >= 1000000) {
-      return `$${(amount / 1000000).toFixed(1)}M`
-    } else if (amount >= 1000) {
-      return `$${(amount / 1000).toFixed(0)}k`
-    }
-    return `$${amount.toLocaleString()}`
-  }
-
-  const formatPercentage = (value: number) => {
-    return `${value.toFixed(1)}%`
-  }
 
   return (
     <div className="flex flex-1 flex-wrap gap-6">

@@ -16,13 +16,13 @@ export const ROUTE_PERMISSIONS = {
 export function hasRouteAccess(route: SidebarItem, userRole?: UserRole): boolean {
   switch (route) {
     case SidebarItem.SuperAdmins:
-      return ['super-adminnnnn'].includes(userRole || '')
+      return false
     case SidebarItem.Admins:
-      return ['super-admin'].includes(userRole || '')
+      return [UserRole.SuperAdmin].includes(userRole || UserRole.None)
     case SidebarItem.Supervisors:
-      return ['super-admin', 'admin'].includes(userRole || '')
+      return [UserRole.SuperAdmin, UserRole.Admin].includes(userRole || UserRole.None)
     case SidebarItem.Clients:
-      return ['super-admin', 'admin', 'supervisor'].includes(userRole || '')
+      return [UserRole.SuperAdmin, UserRole.Admin, UserRole.Supervisor].includes(userRole || UserRole.None)
     default:
       return ROUTE_PERMISSIONS[route]
   }

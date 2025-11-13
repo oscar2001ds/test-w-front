@@ -3,19 +3,11 @@
 import React from 'react'
 import { Users, UserCheck, TrendingUp, DollarSign } from 'lucide-react'
 import { UsersOverviewStats } from '../../types/users.types'
+import { formatCurrency, formatPercentage } from '@/src/shared/utils/formatters'
 
 interface UsersOverviewProps {
   stats: UsersOverviewStats
   isLoading?: boolean
-}
-
-const formatCurrency = (amount: number) => {
-  return new Intl.NumberFormat('es-CO', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(amount)
 }
 
 export function UsersOverview({ stats, isLoading = false }: UsersOverviewProps) {
@@ -36,7 +28,7 @@ export function UsersOverview({ stats, isLoading = false }: UsersOverviewProps) 
 
   const statCards = [
     {
-      title: 'Total Clientes',
+      title: 'Usuarios Totales',
       value: stats.totalUsers,
       icon: Users,
       gradient: 'from-blue-500 to-blue-600',
@@ -58,7 +50,7 @@ export function UsersOverview({ stats, isLoading = false }: UsersOverviewProps) 
     },
     {
       title: 'Retorno Promedio',
-      value: `${stats.averageReturn.toFixed(1)}%`,
+      value: formatPercentage(stats.averageReturn),
       icon: TrendingUp,
       gradient: 'from-orange-500 to-orange-600',
       iconColor: 'text-orange-200'

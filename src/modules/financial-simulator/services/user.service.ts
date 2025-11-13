@@ -1,6 +1,6 @@
 import { httpClient } from "@/src/core/lib/http-client"
 import { User } from "@/src/modules/auth"
-import { GetUsersParams, GetUsersResponse, UserData } from "../types/users.types"
+import { GetOverviewStatsResponse, GetUsersParams, GetUsersWithStatsResponse, UserData, UsersOverviewStats } from "../types/users.types"
 
 export interface UpdateUserPayload {
   username?: string
@@ -9,6 +9,7 @@ export interface UpdateUserPayload {
   lastName?: string
   role?: string
   isActive?: boolean
+  status?: string
 }
 
 class UserService {
@@ -46,7 +47,7 @@ class UserService {
       if (queryParams.sortOrder) queryParamsObj.append('sortOrder', queryParams.sortOrder)
 
       const url = `${this.baseUrl}/role-with-stats?${queryParamsObj.toString()}`
-      const response = await httpClient.get<GetUsersResponse[]>(url)
+      const response = await httpClient.get<GetUsersWithStatsResponse[]>(url)
 
       if (!response) {
         throw new Error("Error inesperado al obtener los usuarios")
@@ -67,6 +68,29 @@ class UserService {
     } catch (error) {
       console.error('Error fetching users:', error)
       throw new Error('Failed to fetch users')
+    }
+  }
+
+  async getUsersOverviewStats(params: { userRole?: string }): Promise<UsersOverviewStats> {
+    try {
+      const queryParamsObj = new URLSearchParams()
+
+      if (params.userRole) {
+        queryParamsObj.append('role', params.userRole)
+      }
+
+      const url = `${this.baseUrl}/overview-stats?${queryParamsObj.toString()}`
+      const response = await httpClient.get<GetOverviewStatsResponse>(url)
+
+      if (!response) {
+        throw new Error("Error inesperado al obtener las estadísticas de usuarios")
+      }
+
+      return response
+
+    } catch (error) {
+      console.error('Error fetching user overview stats:', error)
+      throw new Error('Failed to fetch user overview stats')
     }
   }
 }

@@ -17,8 +17,18 @@ export const PAGE_TITLES: Record<UserRole, { title: string; subtitle: string }> 
   admin: {
     title: "Gestión de Administradores",
     subtitle: "Administra y supervisa todos los administradores de la plataforma"
+  },
+  none: {
+    title: "Gestión de Usuarios",
+    subtitle: "Administra y supervisa todos los usuarios de la plataforma"
   }
 } as const
+
+export const STATUS_OPTIONS = [
+  { value: 'all', label: 'Todos' },
+  { value: 'active', label: 'Activos' },
+  { value: 'inactive', label: 'Inactivos' }
+] as const
 
 export const BUTTON_LABELS = {
   refresh: "Actualizar",
@@ -74,7 +84,8 @@ export const ERROR_MESSAGES = {
 export const SUCCESS_MESSAGES = {
   roleUpdated: "Rol actualizado correctamente",
   dataRefreshed: "Datos actualizados correctamente",
-  dataExported: "Datos exportados correctamente"
+  dataExported: "Datos exportados correctamente",
+  statusChanged: "Estado del usuario actualizado correctamente"
 } as const
 
 // Configuración de ordenamiento

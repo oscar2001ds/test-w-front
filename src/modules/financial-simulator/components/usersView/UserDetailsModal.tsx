@@ -3,31 +3,15 @@
 import React from 'react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/src/shared/components/ui/dialog'
 import { Button } from '@/src/shared/components/ui/button'
-import { User, Mail, Calendar, TrendingUp, DollarSign, BarChart3, UserCheck, UserX, X, Activity } from 'lucide-react'
+import { User, Mail, Calendar, BarChart3, Activity } from 'lucide-react'
 import { UserData } from '../../types/users.types'
 import { ROLE_COLORS } from '../../constants/users.constants'
+import { formatCurrency, formatDate, formatPercentage } from '@/src/shared/utils/formatters'
 
 interface UserDetailsModalProps {
   isOpen: boolean
   onClose: () => void
   user: UserData | null
-}
-
-const formatCurrency = (amount: number) => {
-  return new Intl.NumberFormat('es-CO', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 0,
-    maximumFractionDigits: 0,
-  }).format(amount)
-}
-
-const formatDate = (dateString: string) => {
-  return new Date(dateString).toLocaleDateString('es-CO', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-  })
 }
 
 const formatTimeAgo = (dateString: string) => {
@@ -135,7 +119,7 @@ export function UserDetailsModal({ isOpen, onClose, user }: UserDetailsModalProp
                 </div>
                 <div className="bg-purple-50 rounded-lg p-3 text-center">
                   <div className="text-2xl font-bold text-purple-600">
-                    {user.stats.averageReturn}%
+                    {formatPercentage(user.stats.averageReturn)}
                   </div>
                   <div className="text-xs text-purple-700">Retorno Promedio</div>
                 </div>
