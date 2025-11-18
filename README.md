@@ -48,7 +48,7 @@ Edita el archivo `.env` con las configuraciones necesarias:
 
 ```bash
 # URL de la API backend
-NEXT_PUBLIC_API_URL=http://localhost:4000
+NEXT_PUBLIC_API_URL=http://localhost:4003
 ```
 
 ### 4. Ejecutar el Proyecto
