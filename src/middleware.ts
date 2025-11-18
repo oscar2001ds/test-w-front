@@ -7,7 +7,7 @@ export async function middleware(request: NextRequest) {
 
   try {
     const cookieHeader = request.headers.get('cookie') || undefined
-    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4001'
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:4000'
 
     try {
       const response = await fetch(`${baseUrl}/auth/session`, {
