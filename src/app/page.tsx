@@ -2,7 +2,6 @@
 
 import { useAuth } from "@/src/core/context/AuthContext"
 import { useRouter } from "next/navigation"
-import { EnvironmentDebug } from "../components/EnvironmentDebug"
 
 export default function Home() {
   const { user, isLoading } = useAuth()
@@ -18,7 +17,6 @@ export default function Home() {
 
   return (
     <div className="flex w-screen h-screen min-h-screen items-center justify-center bg-linear-to-l from-[#054c76] via-[#0c192a] to-[#471c3a]">
-      <EnvironmentDebug />
       {user ? (
         <div className="bg-secondary p-8 rounded-lg shadow-lg max-w-md w-full mx-4">
           <div className="text-center">

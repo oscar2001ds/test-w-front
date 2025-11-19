@@ -6,7 +6,6 @@ import { Toaster } from "react-hot-toast";
 import AOSProvider from "../core/context/AosContext";
 import { BreakpointsProvider } from "../core";
 import { AuthProvider } from "../core/context/AuthContext";
-import { ClientRedirectHandler } from "../core/components/ClientRedirectHandler";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -51,7 +50,6 @@ export default function RootLayout({
           <AuthProvider>
             <BreakpointsProvider>
               <AOSProvider>
-                {/* <ClientRedirectHandler /> */}
                 {children}
               </AOSProvider>
             </BreakpointsProvider>
