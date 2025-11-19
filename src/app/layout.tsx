@@ -51,7 +51,7 @@ export default function RootLayout({
           <AuthProvider>
             <BreakpointsProvider>
               <AOSProvider>
-                {/* <ClientRedirectHandler /> */}
+                <ClientRedirectHandler />
                 {children}
               </AOSProvider>
             </BreakpointsProvider>
